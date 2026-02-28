@@ -1,0 +1,11 @@
+# Ignore virtual environment directories
+venv/
+
+# Environment variables file
+.env
+
+# Ignore Airflow logs
+logs/
+
+# Ignore Airflow database files
+airflow.db
