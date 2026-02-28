@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+
   postgres:
     image: postgres:15
     container_name: airflow-postgres
@@ -18,39 +19,58 @@ services:
     restart: always
     depends_on:
       - postgres
+
     env_file:
       - .env
+
     environment:
+      AIRFLOW_UID: 50000
       _PIP_ADDITIONAL_REQUIREMENTS: apache-airflow-providers-apache-spark
       AIRFLOW__CORE__EXECUTOR: ${AIRFLOW_EXECUTOR}
       AIRFLOW__CORE__LOAD_EXAMPLES: ${AIRFLOW_LOAD_EXAMPLES}
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
+
     volumes:
-      - ./dags:/opt/airflow/dags
-      - ./logs:/opt/airflow/logs
-      - ./plugins:/opt/airflow/plugins
+      - airflow_dags:/opt/airflow/dags
+      - airflow_logs:/opt/airflow/logs
+      - airflow_plugins:/opt/airflow/plugins
+
     ports:
-      - "${AIRFLOW_WEBSERVER_PORT}:8080"
+      - ${AIRFLOW_WEBSERVER_PORT}:8080
+
     command: webserver
+
 
   airflow-scheduler:
     image: apache/airflow:2.8.1
     container_name: airflow-scheduler
     restart: always
+
     depends_on:
       - postgres
+
     env_file:
       - .env
+
     environment:
+      AIRFLOW_UID: 50000
       _PIP_ADDITIONAL_REQUIREMENTS: apache-airflow-providers-apache-spark
       AIRFLOW__CORE__EXECUTOR: ${AIRFLOW_EXECUTOR}
       AIRFLOW__CORE__LOAD_EXAMPLES: ${AIRFLOW_LOAD_EXAMPLES}
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
+
     volumes:
-      - ./dags:/opt/airflow/dags
-      - ./logs:/opt/airflow/logs
-      - ./plugins:/opt/airflow/plugins
+      - airflow_dags:/opt/airflow/dags
+      - airflow_logs:/opt/airflow/logs
+      - airflow_plugins:/opt/airflow/plugins
+
     command: scheduler
 
+
 volumes:
+
   postgres_data:
+
+  airflow_logs:
+  airflow_dags:
+  airflow_plugins:
