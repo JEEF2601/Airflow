@@ -25,7 +25,7 @@ services:
 
     environment:
       AIRFLOW_UID: 50000
-      _PIP_ADDITIONAL_REQUIREMENTS: -r /opt/airflow/requirements.txt
+      _PIP_ADDITIONAL_REQUIREMENTS: apache-airflow-providers-apache-spark pyspark
       AIRFLOW__CORE__EXECUTOR: ${AIRFLOW_EXECUTOR}
       AIRFLOW__CORE__LOAD_EXAMPLES: ${AIRFLOW_LOAD_EXAMPLES}
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
@@ -55,7 +55,7 @@ services:
 
     environment:
       AIRFLOW_UID: 50000
-      _PIP_ADDITIONAL_REQUIREMENTS: -r /opt/airflow/requirements.txt
+      _PIP_ADDITIONAL_REQUIREMENTS: apache-airflow-providers-apache-spark pyspark
       AIRFLOW__CORE__EXECUTOR: ${AIRFLOW_EXECUTOR}
       AIRFLOW__CORE__LOAD_EXAMPLES: ${AIRFLOW_LOAD_EXAMPLES}
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
@@ -73,7 +73,7 @@ services:
     depends_on:
       - postgres
     environment:
-      _PIP_ADDITIONAL_REQUIREMENTS: -r /opt/airflow/requirements.txt
+      _PIP_ADDITIONAL_REQUIREMENTS: apache-airflow-providers-apache-spark pyspark
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
     volumes:
       - ./requirements.txt:/opt/airflow/requirements.txt
