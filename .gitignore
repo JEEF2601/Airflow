@@ -7,5 +7,9 @@ venv/
 # Ignore Airflow logs
 logs/
 
+#Ignore temp files
+tmp/
+temp/
+
 # Ignore Airflow database files
 airflow.db
